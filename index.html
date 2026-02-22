@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Meta Tanıtım</title>
+    <!-- PWA Manifest için (ana ekran ikonu kritik burası) -->
+    <link rel="manifest" href="/manifest.json">
+    <!-- Favicon (adres çubuğu için) -->
+    <link rel="icon" type="image/png" href="/fav.png">
+    <!-- iOS ana ekran ikonu -->
+    <link rel="apple-touch-icon" sizes="192x192" href="/fav.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            height: 100%;
+        }
+        body {
+            overflow: hidden;
+            background-color: #000;
+            padding-bottom: env(safe-area-inset-bottom); /* Ekstra güvenli alan için */
+        }
+        iframe {
+            width: 100%;
+            height: calc(var(--vh, 1vh) * 100); /* Dinamik viewport height */
+            border: none;
+            display: block;
+        }
+        /* Mobil için ekstra */
+        @media screen and (max-width: 768px) {
+            body {
+                padding-bottom: max(env(safe-area-inset-bottom), 0px);
+            }
+            iframe {
+                height: calc(var(--vh, 1vh) * 100);
+            }
+        }
+    </style>
+</head>
+<body>
+    <iframe
+        src="https://tradingfeatures.emergent.host/"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation allow-downloads">
+    </iframe>
+    <script>
+        // Mobil viewport height'i dinamik olarak hesapla (safe area'leri dikkate alır)
+        function setVh() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        // İlk yüklemede ve resize/orientation change'de çalıştır
+        setVh();
+        window.addEventListener('resize', setVh);
+    </script>
+</body>
+</html>
